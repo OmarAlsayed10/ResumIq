@@ -11,7 +11,6 @@ import Home from "./features/Home/Home";
 import LoginPage from "./features/Auth/LoginPage";
 import RegisterPage from "./features/Auth/RegisterPage";
 import GoogleAuthSuccess from "./features/Auth/GoogleAuthSuccess";
-import VerifyOTP from "./features/Auth/VerifyOTP";
 import GrammarCheck from "./features/GrammarCheck/GrammarCheck";
 import { FileProvider } from "./context/fileContext.jsx";
 import { TemplateProvider } from "./context/choosenTempContext.jsx";
@@ -29,6 +28,8 @@ import PricingSection from "./features/Home/PricingSection.jsx";
 import { PayPalScriptProvider } from "@paypal/react-paypal-js";
 import CVTipsSection from "./pages/tips.jsx";
 import Settings from "./features/Settings/Settings";
+import TemplatesPage from "./pages/Templates";
+import HelpCenter from "./pages/HelpCenter";
 
 const router = createBrowserRouter([
   {
@@ -70,8 +71,8 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
-      { path: "Blogs", element: <Blog></Blog> },
-      { path: "tips", element: <CVTipsSection></CVTipsSection> },
+      { path: "Blogs", element: <Blog /> },
+      { path: "tips", element: <CVTipsSection /> },
 
       { path: "Blogs/:id", element: <BlogDetail /> },
       { path: "*", element: <Error /> },
@@ -84,11 +85,12 @@ const router = createBrowserRouter([
           </ProtectedRoute>
         ),
       },
+      { path: "templates", element: <TemplatesPage /> },
+      { path: "help", element: <HelpCenter /> },
     ],
   },
   { path: "register", element: <RegisterPage /> },
   { path: "login", element: <LoginPage /> },
-  { path: "verify-otp", element: <VerifyOTP /> },
 ]);
 
 function App() {

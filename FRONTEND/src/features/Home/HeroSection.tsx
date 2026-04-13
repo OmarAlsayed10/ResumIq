@@ -35,7 +35,7 @@ const HeroSection = () => {
       <Box
         sx={{
           px: { xs: 2, md: 4 },
-          py: 3,
+          py: 9,
           position: "relative",
           display: "flex",
           flexWrap: "wrap",

@@ -13,6 +13,7 @@
   "Experience": "Experience",
   "Education": "Education",
   "Skills": "Skills",
+  "Cancel": "Cancel",
   "Personal Information": "Personal Information",
   "First Name": "First Name",
   "Last Name": "Last Name",
@@ -87,14 +88,12 @@
   "pleaseLogin": "Please login first to use the grammar checker.",
   "proRequired": "You must go pro to access this feature.",
   "networkError": "Network error Please try again later.",
-
   "Blogs": "Blogs",
   "Tips": "Tips",
   "Get Started": "Get Started",
   "Profile": "Profile",
   "Settings": "Settings",
   "Logout": "Logout",
-
   "Craft the Perfect CV with AI": "Craft the Perfect CV with AI",
   "home1.subtitle": "Build, analyze, and optimize your resume with our AI-powered tools. Get real-time feedback and land more interviews.",
   "AI-powered CV analysis": "AI-powered CV analysis",
@@ -102,7 +101,6 @@
   "Keyword optimization": "Keyword optimization",
   "ATS compatibility check": "ATS compatibility check",
   "Grammar & spelling review": "Grammar & spelling review",
-
   "Powerful CV Tools": "Powerful CV Tools",
   "home2.subtitle": "Everything you need to create, analyze, and perfect your CV in one place",
   "CV Analysis": "CV Analysis",
@@ -120,10 +118,8 @@
   "interview_questions.subtitle": "Generate personalized interview questions based on your uploaded CV to help you prepare with confidence.",
   "Chat Assistant": "Chat Assistant",
   "chat_assistant.subtitle": "Get instant answers to your career and CV-related queries with our smart chatbot assistant.",
-
   "Choose Your Plan": "Choose Your Plan",
   "Flexible options to match your CV needs": "Flexible options to match your CV needs",
-
   "Free": "Free",
   "month": "month",
   "0": "0",
@@ -138,7 +134,6 @@
   "AI Open Chat Assistant": "AI Open Chat Assistant",
   "Unlimited CVs": "Unlimited CVs",
   "Get Started Free": "Get Started Free",
-
   "Pro": "Pro",
   "9.99": "9.99",
   "Advanced tools for serious job seekers": "Advanced tools for serious job seekers",
@@ -146,9 +141,7 @@
   "All CV Templates": "All CV Templates",
   "Upgrade to Pro": "Upgrade to Pro",
   "already upgraded": "already upgraded",
-
   "footer.subtitle": "The AI-powered CV platform that helps you create, analyze, and improve your resume.",
-
   "Features": "Features",
   "CV Analyzer": "CV Analyzer",
   "Templates": "Templates",
@@ -162,20 +155,17 @@
   "Terms of Service": "Terms of Service",
   "Contact": "Contact",
   "© 2025 All rights reserved.": "© 2025 All rights reserved.",
-
   "Let's Create Your Perfect CV!": "Let's Create Your Perfect CV!",
   "getstarted.subtitle": "Choose how you'd like to get started with your CV",
   "Upload Existing CV": "Upload Existing CV",
   "upload.subtitle": " Upload your current CV in PDF or Word format for analysis and improvement",
   "Upload CV": "Upload CV",
-
   "Create New CV ": "Create New CV",
   "create.subtitle": "Start from scratch with our guided CV builder and customizable templates",
   "Start New CV": "Start New CV",
   "Grammar Checker": "Grammar Checker",
   "grammar_checker.subtitle": "Check your CV for grammar, spelling, and style improvements",
   "Check Grammar": "Check Grammar",
-
   "noArticles": "No articles found",
   "adjustSearch": "Try adjusting your search term",
   "by": "By",
@@ -215,11 +205,8 @@
     "category": "Industry Insights",
     "content": "Industry-Specific CV Advice: What Works in Tech, Healthcare, and FinanceCustomize Your CV for Your Specific Industry with These Tailored Tips and Examples When it comes to CVs, one size does not fit all. Different industries value different skills, experiences, and formats. Tailoring your CV to match the expectations of your industry can significantly increase your chances of landing an interview.\n Here’s how to optimize your CV for three major fields: Tech, Healthcare, and Finance.\n1.Tech Industry: Focus on Skills and Projects \n What Employers Want:\n Technical proficiency \n Problem-solving ability \n Project-based achievements \n Tips: \nHighlight programming languages, tools, and frameworks (e.g., JavaScript, Python, AWS, Git). \n Emphasize projects you've completed—whether professional or personal.\n Include links to GitHub, portfolio sites, or apps you’ve built.\n Use bullet points that show quantifiable results (“Reduced app load time by 40%”).\n 2. Healthcare Industry: Emphasize Certifications and Patient Care \n What Employers Want: \n Clinical expertise \n Empathy and communication \n Certifications and licenses \n Tips: \n Clearly list certifications, licenses, and any specialized training (e.g., CPR, BLS, RN License). \n Highlight hands-on experience with patients or medical procedures. \n Include achievements in patient outcomes, safety protocols, or workflow improvements. \n Use a format that’s structured and conservative. \n 3. Finance Industry: Prioritize Results and Analytical Skills \n What Employers Want:\n Analytical thinking \n Regulatory knowledge \n Measurable results \n Tips: Focus on financial metrics, cost savings, and performance improvements. \n Highlight proficiency in tools like Excel, QuickBooks, or SAP. \n Use precise language to demonstrate trustworthiness and responsibility.\n Structure your CV to reflect professionalism and order.\n Final Thought: Every industry speaks its own language. The more your CV reflects the values and expectations of your target field, the more likely you are to stand out. Customize your content, highlight what matters most, and use examples that resonate with recruiters in your industry."
   },
-
   "By": "By",
-
   "searchPlaceholder": "Search articles...",
-
   "CV Tips & Best Practices": "CV Tips & Best Practices",
   "Expert advice to help you create a standout CV that gets results": "Expert advice to help you create a standout CV that gets results",
   "Dos & Don'ts": "Dos & Don'ts",
@@ -268,7 +255,6 @@
   "Mention language skills and proficiency levels": "Mention language skills and proficiency levels",
   "Include relevant technical skills": "Include relevant technical skills",
   "Highlight projects that demonstrate your capabilities": "Highlight projects that demonstrate your capabilities",
-
   "March": "March",
   "April": "April",
   "May": "May",
@@ -279,11 +265,8 @@
   "October": "October",
   "November": "November",
   "December": "December",
-
   "Back to Blog": "Back to Blog",
-
   "Upload Your CV": "Upload Your CV",
-
   "Account Settings": "Account Settings",
   "Old Password": "Old Password",
   "New Password": "New Password",
@@ -292,12 +275,12 @@
   "Passwords do not match": "Passwords do not match",
   "Password updated successfully": "Password updated successfully",
   "Failed to update password": "Failed to update password",
-   "Go Pro": "Go Pro",
-   "Unlock Pro Features": "Unlock Pro Features",
-   "pro warning text":"Elevate your experience and access powerful tools with our exclusive Pro plan.",
-   "Maybe Later": "Maybe Later",
+  "Go Pro": "Go Pro",
+  "Unlock Pro Features": "Unlock Pro Features",
+  "pro warning text": "Elevate your experience and access powerful tools with our exclusive Pro plan.",
+  "Maybe Later": "Maybe Later",
   "Upgrade Now": "Upgrade Now",
-  "payment text":"Complete your payment below to unlock all premium features.",
+  "payment text": "Complete your payment below to unlock all premium features.",
   "Cardholder Name": "Cardholder Name",
   "Card Number": "Card Number",
   "Expiry Date (MM/YY)": "Expiry Date (MM/YY)",
@@ -310,13 +293,13 @@
   "PayPal": "PayPal",
   "Credit / Debit Card": "Credit / Debit Card",
   "Payment Successful": "Payment Successful",
-  "payment success message":" Thank you for upgrading to Pro! Your account has been upgraded and all premium features are now available.",
+  "payment success message": " Thank you for upgrading to Pro! Your account has been upgraded and all premium features are now available.",
   "Continue to Home": "Continue to Home",
   "Both email and password are required": "Both email and password are required",
   "Login failed": "Login failed",
   "Login to Your Account": "Login to Your Account",
   "Login successful! Redirecting...": "Login successful! Redirecting...",
-  "Password":"Password",
+  "Password": "Password",
   "Login": "Login",
   "Login with Google": "Login with Google",
   "Don't have an account?": "Don't have an account?",

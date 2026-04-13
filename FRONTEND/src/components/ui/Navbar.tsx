@@ -5,17 +5,10 @@ import {
   Toolbar,
   IconButton,
   Typography,
-  Menu,
   Container,
-  Button,
-  MenuItem,
-  Switch,
-  Popover,
-  Avatar,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import DescriptionIcon from "@mui/icons-material/Description";
-import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import axios from "axios";
 import i18n from "../../i18n";
 import { useTranslation } from "react-i18next";
@@ -24,18 +17,13 @@ import ProWarning from "./ProWarning";
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import Cookies from "js-cookie";
-import SettingsIcon from "@mui/icons-material/Settings";
 import { AUTH_ENDPOINTS } from "../../constants/endpoints";
 import { useNavigate } from "react-router-dom";
+import MobileMenu from "./navbar/MobileMenu";
+import DesktopNav from "./navbar/DesktopNav";
 
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
-    null,
-  );
-  const [anchorElPro, setAnchorElPro] = React.useState<null | HTMLElement>(
-    null,
-  );
-  const [anchorElUser, setAnchorElUser] = React.useState<null | HTMLElement>(
     null,
   );
   const [openPaymentDialog, setOpenPaymentDialog] = React.useState(false);
@@ -63,31 +51,11 @@ function Navbar() {
     }
   };
 
-  const handleProClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElPro(event.currentTarget);
-  };
-
-  const handleProClose = () => {
-    setAnchorElPro(null);
-  };
-
-  const handleUserClick = (event: React.MouseEvent<HTMLElement>) => {
-    setAnchorElUser(event.currentTarget);
-  };
-
-  const handleUserClose = () => {
-    setAnchorElUser(null);
-  };
-
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
 
   const handleCloseNavMenu = () => setAnchorElNav(null);
-
-  const toggleLanguage = () => {
-    i18n.changeLanguage(currentLang === "en" ? "ar" : "en");
-  };
 
   const pages = [
     { label: t("Home"), href: "/" },
@@ -153,302 +121,23 @@ function Navbar() {
             </Typography>
           </Box>
 
-          <Menu
-            id="mobile-menu"
+          <MobileMenu
             anchorEl={anchorElNav}
-            anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-            transformOrigin={{ vertical: "top", horizontal: "left" }}
-            open={Boolean(anchorElNav)}
             onClose={handleCloseNavMenu}
-            sx={{ display: { xs: "block", md: "none" } }}
-          >
-            {isAuthenticated && (
-              <MenuItem>
-                <Avatar sx={{ bgcolor: "primary.main", marginInlineEnd: 1 }}>
-                  {user?.firstName?.[0]?.toUpperCase() ||
-                    user?.email?.[0]?.toUpperCase()}
-                </Avatar>
-                {user?.firstName || user?.email?.split("@")[0]}
-              </MenuItem>
-            )}
-            {pages.map((page) => (
-              <MenuItem
-                key={page.label}
-                onClick={() => {
-                  handleCloseNavMenu();
-                  navigate(page.href);
-                }}
-              >
-                <Typography textAlign="center" sx={{ color: "black" }}>
-                  {page.label}
-                </Typography>
-              </MenuItem>
-            ))}
+            pages={pages}
+            isAuthenticated={isAuthenticated}
+            user={user}
+            onLogout={handleLogout}
+            onOpenPayment={() => setOpenPaymentDialog(true)}
+          />
 
-            <MenuItem>
-              <Box sx={{ display: "flex", alignItems: "center" }}>
-                <Typography sx={{ fontSize: "14px", mx: 1 }}>
-                  {isRTL ? "ع" : "En"}
-                </Typography>
-                <Switch
-                  checked={currentLang === "ar"}
-                  onChange={toggleLanguage}
-                  color="primary"
-                />
-              </Box>
-            </MenuItem>
-            {!isAuthenticated && (
-              <MenuItem
-                onClick={() => {
-                  handleCloseNavMenu();
-                  navigate("/login");
-                }}
-              >
-                <Button
-                  fullWidth
-                  sx={{
-                    background:
-                      "linear-gradient(135deg, #5a0db5 0%, #7d25d2 100%)",
-                    color: "white",
-                  }}
-                >
-                  {t("LogIn")}
-                </Button>
-              </MenuItem>
-            )}
-            {user?.role === "normal user" && (
-              <MenuItem
-                onClick={() => {
-                  handleCloseNavMenu();
-                  setOpenPaymentDialog(true);
-                }}
-              >
-                <Button
-                  fullWidth
-                  sx={{
-                    background:
-                      "linear-gradient(135deg, #5a0db5 0%, #7d25d2 100%)",
-                    color: "white",
-                  }}
-                >
-                  {t("Go Pro")}
-                </Button>
-              </MenuItem>
-            )}
-            {user?.role === "pro user" && (
-              <MenuItem onClick={handleProClick}>
-                <Button
-                  fullWidth
-                  sx={{
-                    background:
-                      "linear-gradient(135deg, #5a0db5 0%, #7d25d2 100%)",
-                    color: "white",
-                  }}
-                >
-                  {t("Pro")}
-                </Button>
-              </MenuItem>
-            )}
-            {isAuthenticated && (
-              <MenuItem
-                onClick={() => {
-                  handleCloseNavMenu();
-                  handleLogout();
-                }}
-              >
-                <LogoutOutlinedIcon sx={{ mr: 1 }} />
-                {t("Logout")}
-              </MenuItem>
-            )}
-          </Menu>
-
-          <Box
-            sx={{
-              flexGrow: 1,
-              display: { xs: "none", md: "flex" },
-              flexDirection: "row reverse",
-              alignItems: "center",
-              justifyContent: "flex-end",
-              gap: "40px",
-            }}
-          >
-            {pages.map((page) => (
-              <Typography
-                key={page.label}
-                onClick={() => navigate(page.href)}
-                sx={{
-                  color: "black",
-                  textDecoration: "none",
-                  cursor: "pointer",
-                  fontWeight: 500,
-                }}
-              >
-                {page.label}
-              </Typography>
-            ))}
-
-            {!isAuthenticated && (
-              <Button
-                onClick={() => navigate("/login")}
-                sx={{
-                  background:
-                    "linear-gradient(135deg, #6a11cb 0%, #8e2de2 100%)",
-                  color: "white",
-                  fontSize: "12px",
-                }}
-              >
-                {t("LogIn")}
-              </Button>
-            )}
-
-            {user?.role === "normal user" && (
-              <Button
-                onClick={() => setOpenPaymentDialog(true)}
-                sx={{
-                  background:
-                    "linear-gradient(135deg, #6a11cb 0%, #8e2de2 100%)",
-                  color: "white",
-                  fontSize: "12px",
-                }}
-              >
-                {t("Go Pro")}
-              </Button>
-            )}
-            {!isAuthenticated && (
-              <MenuItem>
-                <Box
-                  sx={{ display: "flex", alignItems: "center", width: "100%" }}
-                >
-                  <Typography sx={{ fontSize: "14px", mx: 1 }}>
-                    {currentLang === "ar" ? "ع" : "En"}
-                  </Typography>
-                  <Switch
-                    checked={currentLang === "ar"}
-                    onChange={() => {
-                      toggleLanguage();
-                      handleUserClose();
-                    }}
-                    color="primary"
-                  />
-                </Box>
-              </MenuItem>
-            )}
-            {user?.role === "pro user" && (
-              <>
-                <Button
-                  onClick={handleProClick}
-                  sx={{
-                    background:
-                      "linear-gradient(135deg, #6a11cb 0%, #8e2de2 100%)",
-                    color: "white",
-                    fontSize: "12px",
-                  }}
-                >
-                  {t("Pro")}
-                </Button>
-                <Popover
-                  open={Boolean(anchorElPro)}
-                  anchorEl={anchorElPro}
-                  onClose={handleProClose}
-                  anchorOrigin={{ vertical: "bottom", horizontal: "left" }}
-                  transformOrigin={{ vertical: "top", horizontal: "left" }}
-                  sx={{ mt: 1 }}
-                >
-                  <Box
-                    sx={{
-                      p: 2,
-                      minWidth: 250,
-                      background: "#fff",
-                      borderRadius: "10px",
-                      boxShadow: 3,
-                    }}
-                  >
-                    <Typography
-                      variant="subtitle1"
-                      sx={{ fontWeight: "bold", mb: 1, color: "#6a11cb" }}
-                    >
-                      {t("Pro Account Details")}
-                    </Typography>
-                    <Typography variant="body2" sx={{ color: "#444" }}>
-                      <strong>{t("User")}:</strong> {user?.email}
-                    </Typography>
-                    <Typography variant="body2" sx={{ color: "#444" }}>
-                      <strong>{t("Plan")}:</strong> {user?.role}
-                    </Typography>
-                    <Typography variant="body2" sx={{ color: "#444" }}>
-                      <strong>{t("Expires at")}:</strong>{" "}
-                      {user?.proExpiresAt
-                        ? new Date(user.proExpiresAt).toLocaleDateString()
-                        : "N/A"}
-                    </Typography>
-                  </Box>
-                </Popover>
-              </>
-            )}
-            {isAuthenticated && (
-              <>
-                <IconButton
-                  onClick={handleUserClick}
-                  sx={{ p: 0, marginInlineEnd: 2 }}
-                >
-                  <Avatar>
-                    {user?.firstName?.[0]?.toUpperCase() ||
-                      user?.email?.[0]?.toUpperCase()}
-                  </Avatar>
-                </IconButton>
-                <Popover
-                  open={Boolean(anchorElUser)}
-                  anchorEl={anchorElUser}
-                  onClose={handleUserClose}
-                  anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
-                  transformOrigin={{ vertical: "top", horizontal: "right" }}
-                  sx={{ mt: 1.5 }}
-                >
-                  <Box sx={{ p: 2, minWidth: 100 }}>
-                    <MenuItem>
-                      <Box
-                        sx={{
-                          display: "flex",
-                          alignItems: "center",
-                          width: "100%",
-                        }}
-                      >
-                        <Typography sx={{ fontSize: "14px", mx: 1 }}>
-                          {currentLang === "ar" ? "ع" : "En"}
-                        </Typography>
-                        <Switch
-                          checked={currentLang === "ar"}
-                          onChange={() => {
-                            toggleLanguage();
-                            handleUserClose();
-                          }}
-                          color="primary"
-                        />
-                      </Box>
-                    </MenuItem>
-                    <MenuItem
-                      onClick={() => {
-                        handleUserClose();
-                        navigate("/settings");
-                      }}
-                    >
-                      <SettingsIcon sx={{ mr: 1 }} />
-                      {t("Settings")}
-                    </MenuItem>
-                    <MenuItem
-                      onClick={() => {
-                        handleLogout();
-                        handleUserClose();
-                      }}
-                    >
-                      <LogoutOutlinedIcon sx={{ mr: 1 }} />
-                      {t("Logout")}
-                    </MenuItem>
-                  </Box>
-                </Popover>
-              </>
-            )}
-          </Box>
+          <DesktopNav
+            pages={pages}
+            isAuthenticated={isAuthenticated}
+            user={user}
+            onOpenPayment={() => setOpenPaymentDialog(true)}
+            onLogout={handleLogout}
+          />
         </Toolbar>
       </Container>
       <ProWarning

@@ -1,40 +1,9 @@
 import { Request, Response, NextFunction } from "express";
-import * as userService from "../services/userService";
 import { StatusCodes } from "http-status-codes";
 import { CustomRequest } from "../middleware/validateJWTMiddleware";
 import jwt from "jsonwebtoken";
 import prisma from "../lib/prisma";
-
-export const register = async (req: Request, res: Response) => {
-  const result = await userService.register(req.body);
-  res.status(result.status).json(result);
-};
-
-export const login = async (req: Request, res: Response) => {
-  const result = await userService.login(req.body);
-
-  if (result.status === 200) {
-    res.cookie("token", result.token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      maxAge: 24 * 60 * 60 * 1000,
-      sameSite: "strict",
-    });
-
-    res.status(result.status).json({
-      message: result.message,
-      token: result.token,
-      user: {
-        userId: result.userId,
-        email: result.email,
-        role: result.role,
-        proExpiresAt: result.proExpiresAt,
-      },
-    });
-  } else {
-    res.status(result.status).json(result);
-  }
-};
+import { cloudinary, deleteImageFromCloudinary } from "../services/importService";
 
 export const logout = (req: Request, res: Response) => {
   res.clearCookie("token", {
@@ -43,52 +12,7 @@ export const logout = (req: Request, res: Response) => {
   res.status(200).json({ message: "Logged out successfully" });
 };
 
-export const verifyOTP = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
-    const { email, otp } = req.body;
-
-    const user = await prisma.user.findUnique({ where: { email } });
-
-    if (!user) {
-      res.status(StatusCodes.NOT_FOUND).json({ message: "User not found" });
-      return;
-    }
-
-    if (user.otp !== otp) {
-      res.status(StatusCodes.BAD_REQUEST).json({ message: "Invalid OTP" });
-      return;
-    }
-
-    if (user.otpExpires && user.otpExpires < new Date()) {
-      res.status(StatusCodes.BAD_REQUEST).json({ message: "OTP has expired" });
-      return;
-    }
-
-    await prisma.user.update({
-      where: { email },
-      data: {
-        otp: null,
-        otpExpires: null,
-      },
-    });
-
-    res.status(StatusCodes.OK).json({ message: "Email verified successfully" });
-  } catch (error) {
-    next(error);
-  }
-};
-
-export const resendOTP = async (req: Request, res: Response) => {
-  const { email } = req.body;
-  const result = await userService.resendOTP(email);
-  res.status(result.status).json(result);
-};
-
-export const getCurrentUser = (req: Request, res: Response) => {
+export const getCurrentUser = async (req: Request, res: Response) => {
   const customReq = req as CustomRequest;
 
   if (!customReq.user) {
@@ -96,8 +20,16 @@ export const getCurrentUser = (req: Request, res: Response) => {
     return;
   }
 
+  const dbUser = await prisma.user.findUnique({ where: { id: customReq.user.userId } });
+
   res.status(200).json({
-    user: customReq.user,
+    user: {
+      ...customReq.user,
+      firstName: dbUser?.firstName,
+      lastName: dbUser?.lastName,
+      photo: dbUser?.photo,
+      isGoogleUser: !!dbUser?.googleId,
+    },
     token: req.cookies.token,
   });
 };
@@ -155,20 +87,156 @@ export const upgradeToPro = async (req: Request, res: Response) => {
   });
 };
 
-export const updatePassword = async (req: Request, res: Response) => {
+
+export const updateProfile = async (req: Request, res: Response) => {
   const customReq = req as CustomRequest;
-  const { oldPassword, newPassword } = req.body;
+  const { firstName, lastName } = req.body;
 
   if (!customReq.user) {
     res.status(401).json({ message: "Unauthorized" });
     return;
   }
 
-  const result = await userService.updatePassword(
-    customReq.user.userId,
-    oldPassword,
-    newPassword
-  );
+  try {
+    const dbUser = await prisma.user.findUnique({ where: { id: customReq.user.userId } });
+    if (!dbUser) {
+      res.status(404).json({ message: "User not found" });
+      return;
+    }
 
-  res.status(result.status).json(result);
+    const nameChanged = dbUser.firstName !== firstName || dbUser.lastName !== lastName;
+    const now = new Date();
+
+    if (nameChanged && dbUser.lastNameChange) {
+      const daysSince = (now.getTime() - dbUser.lastNameChange.getTime()) / (1000 * 3600 * 24);
+      if (daysSince < 30) {
+        res.status(400).json({ message: `Name can only be changed once every 30 days. Remaining: ${Math.ceil(30 - daysSince)} days.` });
+        return;
+      }
+    }
+
+    const updatedUser = await prisma.user.update({
+      where: { id: customReq.user.userId },
+      data: {
+        firstName,
+        lastName,
+        ...(nameChanged ? { lastNameChange: now } : {})
+      },
+    });
+    res.status(200).json({ message: "Profile updated successfully", user: updatedUser });
+  } catch (error) {
+    console.error("Profile update error:", error);
+    res.status(500).json({ message: "Failed to update profile" });
+  }
+};
+
+export const deleteAccount = async (req: Request, res: Response) => {
+  const customReq = req as CustomRequest;
+
+  if (!customReq.user) {
+    res.status(401).json({ message: "Unauthorized" });
+    return;
+  }
+
+  try {
+    const dbUser = await prisma.user.findUnique({ where: { id: customReq.user.userId } });
+
+    if (dbUser?.photo) {
+      await deleteImageFromCloudinary(dbUser.photo);
+    }
+
+    await prisma.user.delete({
+      where: { id: customReq.user.userId },
+    });
+
+    res.clearCookie("token", {
+      httpOnly: true,
+    });
+
+    res.status(200).json({ message: "Account deleted successfully" });
+  } catch (error) {
+    console.error("Account deletion error:", error);
+    res.status(500).json({ message: "Failed to delete account" });
+  }
+};
+
+export const getPlan = async (req: Request, res: Response) => {
+  const customReq = req as CustomRequest;
+  if (!customReq.user) {
+    res.status(401).json({ message: "Unauthorized" });
+    return;
+  }
+
+  try {
+    const user = await prisma.user.findUnique({ where: { id: customReq.user.userId } });
+    if (!user) {
+      res.status(404).json({ message: "User not found" });
+      return;
+    }
+
+    let plan = user.role;
+    let daysLeft = 0;
+
+    if (user.proExpiresAt) {
+      const now = new Date();
+      if (user.proExpiresAt > now) {
+        const diffTime = user.proExpiresAt.getTime() - now.getTime();
+        daysLeft = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+      } else {
+        plan = "normal user";
+      }
+    }
+
+    res.status(200).json({ plan, daysLeft, expiresAt: user.proExpiresAt });
+  } catch (error) {
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};
+
+export const updateProfilePhoto = async (req: Request, res: Response) => {
+  const customReq = req as CustomRequest;
+  if (!customReq.user) {
+    res.status(401).json({ message: "Unauthorized" });
+    return;
+  }
+  if (!req.file || !req.file.path) {
+    res.status(400).json({ message: "No photo provided" });
+    return;
+  }
+
+  try {
+    const updatedUser = await prisma.user.update({
+      where: { id: customReq.user.userId },
+      data: { photo: req.file.path }
+    });
+    res.status(200).json({ message: "Photo updated successfully", photo: updatedUser.photo });
+  } catch (error) {
+    console.error("Photo update error:", error);
+    res.status(500).json({ message: "Failed to update photo" });
+  }
+};
+
+export const deleteProfilePhoto = async (req: Request, res: Response) => {
+  const customReq = req as CustomRequest;
+  if (!customReq.user) {
+    res.status(401).json({ message: "Unauthorized" });
+    return;
+  }
+
+  try {
+    const dbUser = await prisma.user.findUnique({ where: { id: customReq.user.userId } });
+
+    if (dbUser?.photo) {
+      await deleteImageFromCloudinary(dbUser.photo);
+    }
+
+    await prisma.user.update({
+      where: { id: customReq.user.userId },
+      data: { photo: null },
+    });
+    res.status(200).json({ message: "Photo removed successfully" });
+  } catch (error) {
+    console.error("Photo delete error:", error);
+    res.status(500).json({ message: "Failed to remove photo" });
+  }
 };

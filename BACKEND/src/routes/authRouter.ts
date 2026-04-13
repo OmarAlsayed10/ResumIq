@@ -6,29 +6,27 @@ import prisma from "../lib/prisma";
 
 const router = Router();
 import {
-  register,
-  login,
   logout,
-  verifyOTP,
-  resendOTP,
   getCurrentUser,
   upgradeToPro,
-  updatePassword,
+  updateProfile,
+  updateProfilePhoto,
+  deleteProfilePhoto,
+  deleteAccount,
+  getPlan,
 } from "../controllers/authController";
-import {
-  validateRegisterInput,
-  validateLoginInput,
-} from "../middleware/validationMiddleware";
 import { authenticateToken } from "../middleware/validateJWTMiddleware";
+import { uploadAvatar } from "../services/importService";
 
-router.post("/register", validateRegisterInput, register);
-router.post("/login", validateLoginInput, login);
 router.post("/logout", logout);
-router.post("/verify-otp", verifyOTP);
-router.post("/resend-otp", resendOTP);
 router.get("/verify-token", authenticateToken, getCurrentUser);
 router.post("/upgrade", upgradeToPro);
-router.post("/update-password", authenticateToken, updatePassword);
+
+router.patch("/profile", authenticateToken, updateProfile);
+router.post("/profile/photo", authenticateToken, uploadAvatar.single("photo"), updateProfilePhoto);
+router.delete("/profile/photo", authenticateToken, deleteProfilePhoto);
+router.delete("/account", authenticateToken, deleteAccount);
+router.get("/plan", authenticateToken, getPlan);
 
 // Google OAuth routes
 router.get(

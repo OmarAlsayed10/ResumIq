@@ -17,7 +17,7 @@ const storage = new CloudinaryStorage({
   params: async (req, file) => {
     return {
       folder: "resumes",
-      resource_type: "raw", // Use raw so that PDFs and Word docs are safely stored as files
+      resource_type: "raw",
       public_id: `${Date.now()}-${file.originalname.replace(/[^a-zA-Z0-9.\-_]/g, '')}`,
     };
   },
@@ -33,12 +33,44 @@ const fileFilter = (req: Request, file: Express.Multer.File, cb: FileFilterCallb
   if (allowedTypes.includes(file.mimetype)) {
     cb(null, true);
   } else {
-    // To reject we must technically pass `false` but an error throws beautifully so express handles it
     cb(new Error("Invalid file type. Only PDF and DOC/DOCX files are supported") as any, false);
   }
 };
 
 const upload = multer({ storage, fileFilter, limits: { fileSize: 5 * 1024 * 1024 } });
+
+const avatarStorage = new CloudinaryStorage({
+  cloudinary: cloudinary,
+  params: async (req, file) => {
+    return {
+      folder: "avatars",
+      format: "jpg",
+      public_id: `${Date.now()}-${file.originalname.replace(/[^a-zA-Z0-9.\-_]/g, '')}`,
+    };
+  },
+});
+
+const imageFilter = (req: Request, file: Express.Multer.File, cb: FileFilterCallback) => {
+  if (file.mimetype.startsWith("image/")) {
+    cb(null, true);
+  } else {
+    cb(new Error("Invalid file type. Only images are supported") as any, false);
+  }
+};
+
+export const uploadAvatar = multer({ storage: avatarStorage, fileFilter: imageFilter, limits: { fileSize: 5 * 1024 * 1024 } });
+
+export const deleteImageFromCloudinary = async (imageUrl: string) => {
+  const match = imageUrl.match(/\/upload\/(?:v\d+\/)?(.+)\.[a-zA-Z]+$/);
+  if (match && match[1]) {
+    const publicId = match[1];
+    console.log("Deleting from Cloudinary, public_id:", publicId);
+    await cloudinary.uploader.destroy(publicId).catch((err) => console.error("Cloudinary error:", err));
+    return true;
+  }
+  console.warn("Could not extract public_id from photo URL:", imageUrl);
+  return false;
+};
 
 export { cloudinary };
 export default upload;

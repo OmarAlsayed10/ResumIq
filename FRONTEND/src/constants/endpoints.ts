@@ -19,3 +19,13 @@ export const BUILDER_ENDPOINTS = {
 export const AI_ENDPOINTS = {
     grammarCheck: `${API_BASE_URL}/api/ai/grammarcheck`
 };
+
+export const CV_ENDPOINTS = {
+    userCvs: `${API_BASE_URL}/cvbuilder/user`
+};
+
+export const USER_ENDPOINTS = {
+    plan: `${API_BASE_URL}/auth/plan`,
+    updateProfile: `${API_BASE_URL}/auth/profile`,
+    deleteAccount: `${API_BASE_URL}/auth/account`
+};

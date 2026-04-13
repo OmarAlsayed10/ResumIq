@@ -1,65 +1,21 @@
-import { useState } from "react";
 import {
-  FormControl,
-  TextField,
+  Box,
   Button,
   Typography,
-  Box,
   Container,
   Grid,
-  Alert,
   Link,
 } from "@mui/material";
 import GoogleIcon from "@mui/icons-material/Google";
-import axios from "axios";
-import { useNavigate, Link as RouterLink } from "react-router-dom";
+import { Link as RouterLink } from "react-router-dom";
 import { AUTH_ENDPOINTS } from "../../constants/endpoints";
-import { useAuth } from "../../hooks/useAuth";
 import HomeIcon from "@mui/icons-material/Home";
 import { useTranslation } from "react-i18next";
 import i18n from "../../i18n";
 
 const LoginPage = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState(false);
-  const navigate = useNavigate();
-  const { login } = useAuth();
   const { t } = useTranslation();
-
   const currentLang = i18n.language;
-
-  const handleSubmit = async () => {
-    if (!email || !password) {
-      setError(t("Both email and password are required"));
-      return;
-    }
-
-    try {
-      const response = await axios.post(
-        AUTH_ENDPOINTS.login,
-        {
-          email,
-          password,
-        },
-        {
-          withCredentials: true,
-        },
-      );
-
-      if (response.status === 200) {
-        const { user, token } = response.data;
-        login(user, token);
-        setSuccess(true);
-        setError("");
-        navigate("/");
-      }
-    } catch (err) {
-      setError(err.response?.data?.message || t("Login failed"));
-      setSuccess(false);
-    }
-  };
 
   const handleGoogleLogin = () => {
     window.location.href = AUTH_ENDPOINTS.google;
@@ -111,6 +67,9 @@ const LoginPage = () => {
               borderRadius: 2,
               boxShadow: "0 4px 10px rgba(0, 0, 0, 0.1)",
               padding: { xs: 2, sm: 4 },
+              display: "flex",
+              flexDirection: "column",
+              gap: 3,
             }}
           >
             <Typography
@@ -119,104 +78,48 @@ const LoginPage = () => {
                 textAlign: "center",
                 color: "primary.main",
                 fontWeight: "bold",
-                mb: 3,
                 fontSize: { xs: "1.5rem", sm: "2rem" },
               }}
             >
               {t("Login to Your Account")}
             </Typography>
 
-            {success && (
-              <Alert severity="success" sx={{ mb: 2 }}>
-                {t("Login successful! Redirecting...")}
-              </Alert>
-            )}
-
-            {error && (
-              <Typography color="error" sx={{ mb: 2, textAlign: "center" }}>
-                {error}
-              </Typography>
-            )}
-
-            <FormControl
+            <Button
+              variant="outlined"
+              color="secondary"
+              onClick={handleGoogleLogin}
+              startIcon={currentLang === "en" ? <GoogleIcon /> : <></>}
+              endIcon={
+                currentLang === "ar" ? <GoogleIcon sx={{ mx: 1 }} /> : <></>
+              }
               sx={{
-                width: "100%",
-                gap: { xs: 1.5, sm: 2 },
-                display: "flex",
-                flexDirection: "column",
+                padding: { xs: 1.5, sm: 2 },
+                fontWeight: "bold",
+                fontSize: { xs: "1rem", sm: "1.1rem" },
               }}
             >
-              <TextField
-                label={t("Email")}
-                type="email"
-                variant="outlined"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                fullWidth
-              />
-              <TextField
-                label={t("Password")}
-                type="password"
-                variant="outlined"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                fullWidth
-              />
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleSubmit}
-                sx={{
-                  mt: { xs: 1, sm: 2 },
-                  padding: { xs: 1, sm: 1.5 },
-                  fontWeight: "bold",
-                  fontSize: { xs: "0.9rem", sm: "1rem" },
-                }}
-              >
-                {t("Login")}
-              </Button>
+              {t("Login with Google")}
+            </Button>
 
-              <Button
-                variant="outlined"
-                color="secondary"
-                onClick={handleGoogleLogin}
-                startIcon={currentLang === "en" ? <GoogleIcon /> : <></>}
-                endIcon={
-                  currentLang === "ar" ? <GoogleIcon sx={{ mx: 1 }} /> : <></>
-                }
+            <Typography
+              sx={{
+                textAlign: "center",
+                fontSize: { xs: "0.8rem", sm: "0.9rem" },
+              }}
+            >
+              {t("Don't have an account?")}{" "}
+              <Link
+                component={RouterLink}
+                to="/register"
                 sx={{
-                  mt: 2,
-                  padding: { xs: 1, sm: 1.5 },
+                  color: "#1976d2",
+                  textDecoration: "none",
                   fontWeight: "bold",
-                  fontSize: { xs: "0.9rem", sm: "1rem" },
                 }}
               >
-                {t("Login with Google")}
-              </Button>
-
-              <Typography
-                sx={{
-                  mt: { xs: 1, sm: 2 },
-                  textAlign: "center",
-                  fontSize: { xs: "0.8rem", sm: "0.9rem" },
-                }}
-              >
-                {t("Don't have an account?")}{" "}
-                <Link
-                  component={RouterLink}
-                  to="/register"
-                  sx={{
-                    color: "#1976d2",
-                    textDecoration: "none",
-                    fontWeight: "bold",
-                  }}
-                >
-                  {t("Register")}
-                </Link>
-              </Typography>
-            </FormControl>
+                {t("Register")}
+              </Link>
+            </Typography>
           </Box>
         </Grid>
       </Grid>

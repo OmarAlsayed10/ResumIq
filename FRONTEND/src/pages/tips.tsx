@@ -29,11 +29,7 @@ const CVTipsSection = () => {
   const { formatTips, contentTips } = getBestPractices(t);
 
   return (
-    <Box
-      sx={{
-        overflow: "hidden",
-      }}
-    >
+    <Box>
       <Box
         sx={{
           bgcolor: "background.gray",
