@@ -1,0 +1,48 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String    @id @default(uuid())
+  firstName    String
+  lastName     String
+  email        String    @unique
+  password     String?
+  role         String    @default("normal user")
+  otp          String?
+  otpExpires   DateTime?
+  proExpiresAt DateTime?
+  googleId     String?   @unique
+  createdAt    DateTime  @default(now())
+
+  cvs   CV[]
+  chats Chat[]
+}
+
+model CV {
+  id            String   @id @default(uuid())
+  userId        String
+  personalInfo  Json
+  experience    Json
+  education     Json
+  skills        Json
+  cloudinaryUrl String?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Chat {
+  id        String   @id @default(uuid())
+  userId    String
+  messages  Json     @default("[]")
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
