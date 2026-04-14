@@ -13,11 +13,9 @@ export const usePayment = () => {
     expiry: '',
     cvv: '',
     address: '',
-    paypalEmail: '',
   });
 
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [paymentMethod, setPaymentMethod] = useState<'card' | 'paypal'>('card');
   const [loading, setLoading] = useState(false);
   const [dialogOpen, setDialogOpen] = useState(false);
   const [errorSnackbarOpen, setErrorSnackbarOpen] = useState(false);
@@ -35,21 +33,14 @@ export const usePayment = () => {
   const validate = (): boolean => {
     const temp: Record<string, string> = {};
 
-    if (paymentMethod === 'card') {
-      if (!form.name.trim()) temp.name = 'Name is required';
-      if (!form.cardNumber || form.cardNumber.length !== 16)
-        temp.cardNumber = 'Card number must be 16 digits';
-      if (!/^\d{2}\/\d{2}$/.test(form.expiry))
-        temp.expiry = 'Expiry must be in MM/YY format';
-      if (!form.cvv || form.cvv.length < 3 || form.cvv.length > 4)
-        temp.cvv = 'CVV must be 3 or 4 digits';
-      if (!form.address.trim()) temp.address = 'Billing address is required';
-    }
-
-    if (paymentMethod === 'paypal') {
-      if (!form.paypalEmail || !/\S+@\S+\.\S+/.test(form.paypalEmail))
-        temp.paypalEmail = 'Enter a valid PayPal email';
-    }
+    if (!form.name.trim()) temp.name = 'Name is required';
+    if (!form.cardNumber || form.cardNumber.length !== 16)
+      temp.cardNumber = 'Card number must be 16 digits';
+    if (!/^\d{2}\/\d{2}$/.test(form.expiry))
+      temp.expiry = 'Expiry must be in MM/YY format';
+    if (!form.cvv || form.cvv.length < 3 || form.cvv.length > 4)
+      temp.cvv = 'CVV must be 3 or 4 digits';
+    if (!form.address.trim()) temp.address = 'Billing address is required';
 
     setErrors(temp);
     return Object.keys(temp).length === 0;
@@ -105,8 +96,6 @@ export const usePayment = () => {
   return {
     form,
     errors,
-    paymentMethod,
-    setPaymentMethod,
     loading,
     dialogOpen,
     errorSnackbarOpen,

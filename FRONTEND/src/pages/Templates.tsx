@@ -43,10 +43,9 @@ const TemplatesPage = () => {
           variant="h4"
           fontWeight={700}
           sx={{
-            background: "linear-gradient(135deg, #6a11cb 0%, #8e2de2 100%)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
+            color: "#1a1a18",
             mb: 1,
+            fontFamily: '"DM Serif Display", serif'
           }}
         >
           {t("CV Templates")}
@@ -90,7 +89,7 @@ const TemplatesPage = () => {
                       position: "absolute",
                       top: 12,
                       right: 12,
-                      background: "linear-gradient(135deg, #6a11cb, #8e2de2)",
+                      background: "#2a5c45",
                       color: "white",
                       fontWeight: 700,
                       fontSize: 11,
@@ -124,10 +123,15 @@ const TemplatesPage = () => {
                     background:
                       !isPro && template.pro
                         ? undefined
-                        : "linear-gradient(135deg, #6a11cb 0%, #8e2de2 100%)",
+                        : "#2a5c45",
                     borderRadius: 2,
                     textTransform: "none",
                     fontWeight: 600,
+                    boxShadow: "none",
+                    "&:hover": {
+                       background: !isPro && template.pro ? undefined : "#1e4332",
+                       boxShadow: "none"
+                    }
                   }}
                 >
                   {!isPro && template.pro ? t("Pro Only") : t("Use Template")}

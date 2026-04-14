@@ -3,8 +3,6 @@ import {
   Typography,
   Grid,
   Paper,
-  Tabs,
-  Tab,
   Box,
   Dialog,
   DialogTitle,
@@ -15,19 +13,18 @@ import {
   Alert
 } from '@mui/material';
 import CreditCardIcon from '@mui/icons-material/CreditCard';
-import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
+
 import { useTranslation } from "react-i18next";
 import { usePayment } from './hooks/usePayment';
 import { CreditCardForm } from './components/CreditCardForm';
-import { PayPalCheckout } from './components/PayPalCheckout';
+
 import { PlanSummaryCards } from './components/PlanSummaryCards';
 
 const ProPaymentForm = () => {
   const {
     form,
     errors,
-    paymentMethod,
-    setPaymentMethod,
+
     loading,
     dialogOpen,
     errorSnackbarOpen,
@@ -50,58 +47,26 @@ const ProPaymentForm = () => {
     <Box sx={{ background: '#f5f5fa', minHeight: '100vh', py: 6 }}>
       <Container maxWidth="md">
         <Paper
-          elevation={4}
+          elevation={0}
           sx={{
             display: 'flex',
             flexDirection: { xs: 'column', md: 'row' },
-            borderRadius: 4,
+            borderRadius: "10px",
+            border: "1px solid rgba(26,26,24,0.1)",
             overflow: 'hidden',
           }}
         >
           <Box sx={{ flex: 2, p: 4, backgroundColor: '#fff' }}>
-            <Typography variant="h4" gutterBottom fontWeight="bold">
+            <Typography variant="h4" gutterBottom sx={{ fontFamily: '"DM Serif Display", serif', color: '#1a1a18' }}>
               {t("Upgrade to Pro")}
             </Typography>
             <Typography variant="body1" sx={{ mb: 3 }} color="text.secondary">
               {t("payment text")}
             </Typography>
 
-            <Tabs
-              value={paymentMethod}
-              onChange={(_, newValue) => setPaymentMethod(newValue)}
-              indicatorColor="secondary"
-              textColor="secondary"
-              variant="fullWidth"
-              sx={{ mb: 3 }}
-            >
-              <Tab
-                value="card"
-                label={t("Credit / Debit Card")}
-                icon={<CreditCardIcon />}
-                iconPosition="start"
-              />
-              <Tab
-                value="paypal"
-                label={t("PayPal")}
-                icon={<AccountBalanceWalletIcon />}
-                iconPosition="start"
-              />
-            </Tabs>
-
             <form onSubmit={handleSubmit}>
               <Grid container spacing={2}>
-                {paymentMethod === 'card' ? (
-                  <CreditCardForm form={form} errors={errors} handleChange={handleChange} loading={loading} />
-                ) : (
-                  <PayPalCheckout 
-                    user={user} 
-                    dispatch={dispatch} 
-                    login={login} 
-                    setErrorMessage={setErrorMessage} 
-                    setErrorSnackbarOpen={setErrorSnackbarOpen} 
-                    setDialogOpen={setDialogOpen} 
-                  />
-                )}
+                <CreditCardForm form={form} errors={errors} handleChange={handleChange} loading={loading} />
               </Grid>
             </form>
           </Box>

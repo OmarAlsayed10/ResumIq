@@ -1,4 +1,4 @@
-import ProWarning from "../../components/ui/ProWarning";
+
 import { useChatBot } from "./hooks/useChatBot";
 import { ChatTriggerButton } from "./components/ChatTriggerButton";
 import { ChatWindow } from "./components/ChatWindow";
@@ -14,8 +14,6 @@ const ChatBot = () => {
     messagesEndRef,
     handleChatButtonClick,
     handleSend,
-    openPaymentDialog,
-    setOpenPaymentDialog,
   } = useChatBot();
 
   return (
@@ -30,10 +28,6 @@ const ChatBot = () => {
         setOpen={setOpen}
         errorMessage={errorMessage}
         messagesEndRef={messagesEndRef}
-      />
-      <ProWarning
-        openPaymentDialog={openPaymentDialog}
-        setOpenPaymentDialog={setOpenPaymentDialog}
       />
     </>
   );

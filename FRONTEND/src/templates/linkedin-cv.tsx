@@ -22,7 +22,6 @@ const LinkedInCV = ({
       minHeight: "100vh",
     }}>
       <Box sx={{
-        maxWidth: "900px",
         width: "100%",
         backgroundColor: "#fff",
         padding: "40px",
@@ -52,9 +51,27 @@ const LinkedInCV = ({
           <Box sx={{
             fontSize: "15px",
             color: "#555",
-            marginTop: "8px",
+            marginTop: "12px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            gap: "12px",
+            flexWrap: "wrap"
           }}>
-            <Box component="span">{email}</Box> | <Box component="span">{phone}</Box> | <Box component="span">{location}</Box>
+            <Box component="span">
+              <Box component="span" sx={{ fontWeight: 600, color: "#333", mr: 0.5 }}>Email:</Box> 
+              {email}
+            </Box> 
+            <Box component="span" sx={{ color: "#ccc" }}>|</Box> 
+            <Box component="span">
+              <Box component="span" sx={{ fontWeight: 600, color: "#333", mr: 0.5 }}>Phone:</Box> 
+              {phone}
+            </Box> 
+            <Box component="span" sx={{ color: "#ccc" }}>|</Box> 
+            <Box component="span">
+              <Box component="span" sx={{ fontWeight: 600, color: "#333", mr: 0.5 }}>Location:</Box> 
+              {location}
+            </Box>
           </Box>
         </Box>
 

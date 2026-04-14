@@ -29,141 +29,93 @@ const HeroSection = () => {
     <Box
       sx={{
         overflowX: "hidden",
-        bgcolor: "#fceff9",
+        bgcolor: "#f5f4ef",
       }}
     >
       <Box
         sx={{
           px: { xs: 2, md: 4 },
-          py: 9,
-          position: "relative",
+          py: { xs: 8, md: 12 },
+          maxWidth: "760px",
+          margin: "0 auto",
           display: "flex",
-          flexWrap: "wrap",
-          justifyContent: "space-between",
-          alignItems: "flex-start",
-          gap: 4,
+          flexDirection: "column",
+          alignItems: "center",
+          textAlign: "center",
+          gap: 3,
         }}
       >
-        <Box
-          component="svg"
-          viewBox="0 0 200 200"
-          xmlns="http://www.w3.org/2000/svg"
-          sx={{
-            position: "absolute",
-            top: "-60px",
-            left: "-60px",
-            width: "200px",
-            height: "200px",
-            zIndex: 0,
-            opacity: 0.2,
-            pointerEvents: "none",
-          }}
-        >
-          <path
-            fill="#8e44ad"
-            d="M49.3,-71.1C64.5,-62.4,77.1,-48.1,80.4,-32.4C83.6,-16.8,77.5,-0.8,72.5,13.6C67.4,28.1,63.4,41,54.6,51.6C45.9,62.1,32.3,70.3,17.3,73.5C2.2,76.6,-14.3,74.6,-28.9,68.2C-43.5,61.8,-56.3,51.1,-62.2,38.1C-68,25.1,-67,9.9,-66.4,-6.1C-65.9,-22.2,-65.7,-38.9,-57.9,-52.3C-50.1,-65.7,-34.7,-75.8,-18.1,-79.5C-1.6,-83.1,15.9,-80.3,49.3,-71.1Z"
-            transform="translate(100 100)"
-          />
-        </Box>
-
         <Grow in timeout={1000}>
           <Box
             sx={{
-              flex: "1 1 48%",
               display: "flex",
               flexDirection: "column",
               gap: 3,
+              alignItems: "center",
               zIndex: 1,
-              minWidth: { xs: "100%", md: "45%" },
             }}
           >
             <Typography
-              variant="h2"
               sx={{
-                fontWeight: "bold",
-                background:
-                  "linear-gradient(to right, rgb(107, 36, 155), rgb(233, 155, 38), rgb(241, 123, 212))",
-                WebkitBackgroundClip: "text",
-                WebkitTextFillColor: "transparent",
+                fontSize: "12px",
+                letterSpacing: "1.2px",
+                textTransform: "uppercase",
+                color: "#2a5c45",
+                fontWeight: 500,
               }}
             >
-              {t("Craft the Perfect CV with AI")}
+              Resume-IQ BUILDER
             </Typography>
 
             <Typography
-              variant="subtitle1"
+              variant="h1"
               sx={{
-                color: "text.secondary",
-                fontSize: "20px",
+                fontSize: { xs: "2.5rem", md: "3.5rem" },
+                fontFamily: '"DM Serif Display", serif',
+                lineHeight: 1.1,
+                color: "#1a1a18",
+              }}
+            >
+              Craft the{" "}
+              <Box component="i" sx={{ color: "#2a5c45" }}>
+                Perfect CV
+              </Box>{" "}
+              with AI
+            </Typography>
+
+            <Typography
+              variant="body1"
+              sx={{
+                color: "#6b6b66",
+                fontSize: "17px",
+                lineHeight: 1.7,
+                maxWidth: "600px",
               }}
             >
               {t("home1.subtitle")}
             </Typography>
 
-            <List sx={{ padding: 0 }}>
-              {[
-                t("AI-powered CV analysis"),
-                t("Professional templates"),
-                t("Keyword optimization"),
-                t("ATS compatibility check"),
-                t("Grammar & spelling review"),
-              ].map((feature, index) => (
-                <Fade in timeout={500 + index * 200} key={feature}>
-                  <ListItem
-                    disablePadding
-                    sx={{
-                      mb: 1,
-                      transition: "transform 0.3s",
-                      "&:hover": {
-                        transform: "translateX(5px)",
-                      },
-                    }}
-                  >
-                    <ListItemIcon>
-                      <Box
-                        sx={{
-                          width: 28,
-                          height: 28,
-                          borderRadius: "50%",
-                          backgroundColor: "#e0e0e0",
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          boxShadow: 1,
-                        }}
-                      >
-                        <CheckIcon
-                          sx={{ fontSize: 18, color: "primary.main" }}
-                        />
-                      </Box>
-                    </ListItemIcon>
-                    <ListItemText
-                      primary={feature}
-                      primaryTypographyProps={{
-                        sx: {
-                          color: "black",
-                          fontWeight: 500,
-                          textAlign: "start",
-                        },
-                      }}
-                    />
-                  </ListItem>
-                </Fade>
-              ))}
-            </List>
-
-            <Box sx={{ display: "flex", gap: 2, mt: 1 }}>
+            <Box
+              sx={{
+                display: "flex",
+                gap: 2,
+                mt: 2,
+                flexWrap: "wrap",
+                justifyContent: "center",
+              }}
+            >
               <Button
                 variant="contained"
                 sx={{
-                  width: "40%",
-                  borderRadius: "30px",
-                  mt: 2,
-                  boxShadow: 3,
-                  transition: "all 0.3s",
+                  px: 4,
+                  py: 1.5,
+                  borderRadius: "6px",
+                  boxShadow: "none",
+                  backgroundColor: "#2a5c45",
+                  color: "white",
                   "&:hover": {
-                    transform: "scale(1.05)",
-                    boxShadow: 6,
+                    backgroundColor: "#1e4332",
+                    boxShadow: "none",
                   },
                 }}
                 endIcon={
@@ -180,17 +132,11 @@ const HeroSection = () => {
               <Button
                 variant="outlined"
                 sx={{
-                  width: "40%",
-                  borderRadius: "30px",
-                  mt: 2,
-                  color: "black",
-                  borderColor: "#ccc",
-                  boxShadow: 1,
-                  transition: "all 0.3s",
-                  "&:hover": {
-                    transform: "scale(1.05)",
-                    borderColor: "black",
-                  },
+                  px: 4,
+                  py: 1.5,
+                  borderRadius: "6px",
+                  borderColor: "rgba(26,26,24,0.1)",
+                  color: "#1a1a18",
                 }}
                 onClick={() => navigate("/getStart")}
               >
@@ -203,28 +149,199 @@ const HeroSection = () => {
         <Fade in timeout={1200}>
           <Box
             sx={{
-              flex: "1 1 48%",
-              minWidth: { xs: "100%", md: "45%" },
+              width: "100%",
               mt: { xs: 4, md: 6 },
               zIndex: 1,
             }}
           >
-            <Tilt glareEnable={true} glareMaxOpacity={0.25} glareColor="#aaa">
+            <Box
+              component={motion.div}
+              initial="initial"
+              whileHover="hover"
+              animate={{ y: [-5, 5, -5] }}
+              transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+              sx={{
+                position: "relative",
+                width: "100%",
+                maxWidth: "480px",
+                margin: "0 auto",
+              }}
+            >
+              {/* CV Created Popup */}
               <Box
-                component={motion.img}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1 }}
-                src="/home.jpg"
-                alt="CV Preview"
+                component={motion.div}
+                variants={{
+                  initial: { opacity: 0, y: 20, scale: 0.9 },
+                  hover: { opacity: 1, y: 0, scale: 1 },
+                }}
+                transition={{ duration: 0.3 }}
+                sx={{
+                  position: "absolute",
+                  top: -20,
+                  right: -20,
+                  bgcolor: "#2a5c45",
+                  color: "white",
+                  px: 2,
+                  py: 1,
+                  borderRadius: "8px",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 1,
+                  zIndex: 10,
+                  boxShadow: "0 10px 25px rgba(42,92,69,0.3)",
+                }}
+              >
+                <CheckIcon sx={{ fontSize: "1.2rem" }} />
+                <Typography sx={{ fontWeight: 500, fontSize: "0.85rem" }}>
+                  {t("CV Created Successfully")}
+                </Typography>
+              </Box>
+
+              <Box
                 sx={{
                   width: "100%",
-                  borderRadius: "16px",
-                  boxShadow: 6,
-                  objectFit: "cover",
+                  backgroundColor: "#ffffff",
+                  borderRadius: "10px",
+                  border: "1px solid rgba(26,26,24,0.1)",
+                  padding: { xs: 3, md: 4 },
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: 3,
+                  boxShadow: "0 25px 50px -12px rgba(0,0,0,0.08)",
+                  transition: "transform 0.3s ease, box-shadow 0.3s ease",
+                  "&:hover": {
+                    boxShadow: "0 30px 60px -12px rgba(0,0,0,0.12)",
+                    transform: "translateY(-4px)",
+                  },
                 }}
-              />
-            </Tilt>
+              >
+                {/* Header / Profile */}
+                <Box
+                  sx={{ display: "flex", alignItems: "center", gap: 2, mb: 1 }}
+                >
+                  <Box
+                    component={motion.div}
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ duration: 0.6, ease: "easeOut", delay: 0.2 }}
+                    sx={{
+                      width: 64,
+                      height: 64,
+                      backgroundColor: "#e8f2ec",
+                      borderRadius: "50%",
+                    }}
+                  />
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexDirection: "column",
+                      gap: 1.5,
+                      flex: 1,
+                    }}
+                  >
+                    <Box
+                      component={motion.div}
+                      initial={{ width: 0 }}
+                      animate={{ width: "60%" }}
+                      transition={{
+                        duration: 0.8,
+                        delay: 0.4,
+                        ease: "easeOut",
+                      }}
+                      sx={{
+                        height: 16,
+                        backgroundColor: "#2a5c45",
+                        borderRadius: "4px",
+                      }}
+                    />
+                    <Box
+                      component={motion.div}
+                      initial={{ width: 0 }}
+                      animate={{ width: "35%" }}
+                      transition={{
+                        duration: 0.8,
+                        delay: 0.6,
+                        ease: "easeOut",
+                      }}
+                      sx={{
+                        height: 12,
+                        backgroundColor: "#f5f4ef",
+                        borderRadius: "4px",
+                      }}
+                    />
+                  </Box>
+                </Box>
+
+                <Box sx={{ borderBottom: "1px solid rgba(26,26,24,0.05)" }} />
+
+                {/* Body Sub-sections */}
+                {[0.8, 1.4, 1.8].map((delay, index) => (
+                  <Box
+                    key={index}
+                    sx={{ display: "flex", flexDirection: "column", gap: 1.5 }}
+                  >
+                    <Box
+                      component={motion.div}
+                      initial={{ width: 0 }}
+                      animate={{ width: "25%" }}
+                      transition={{ duration: 0.6, delay, ease: "easeOut" }}
+                      sx={{
+                        height: 14,
+                        backgroundColor: "#e0e0e0",
+                        borderRadius: "4px",
+                      }}
+                    />
+                    <Box
+                      component={motion.div}
+                      initial={{ width: 0 }}
+                      animate={{ width: index % 2 === 0 ? "85%" : "100%" }}
+                      transition={{
+                        duration: 0.8,
+                        delay: delay + 0.2,
+                        ease: "easeOut",
+                      }}
+                      sx={{
+                        height: 10,
+                        backgroundColor: "#f5f4ef",
+                        borderRadius: "4px",
+                      }}
+                    />
+                    <Box
+                      component={motion.div}
+                      initial={{ width: 0 }}
+                      animate={{ width: index % 2 === 0 ? "95%" : "75%" }}
+                      transition={{
+                        duration: 0.8,
+                        delay: delay + 0.4,
+                        ease: "easeOut",
+                      }}
+                      sx={{
+                        height: 10,
+                        backgroundColor: "#f5f4ef",
+                        borderRadius: "4px",
+                      }}
+                    />
+                    {index === 0 && (
+                      <Box
+                        component={motion.div}
+                        initial={{ width: 0 }}
+                        animate={{ width: "60%" }}
+                        transition={{
+                          duration: 0.8,
+                          delay: delay + 0.6,
+                          ease: "easeOut",
+                        }}
+                        sx={{
+                          height: 10,
+                          backgroundColor: "#f5f4ef",
+                          borderRadius: "4px",
+                        }}
+                      />
+                    )}
+                  </Box>
+                ))}
+              </Box>
+            </Box>
           </Box>
         </Fade>
       </Box>

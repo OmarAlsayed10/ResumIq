@@ -1,99 +1,203 @@
-import { Box, Typography, Card, CardContent, Grid, CardActionArea } from '@mui/material'
-import PlagiarismIcon from '@mui/icons-material/PlagiarismOutlined';
-import TaskIcon from '@mui/icons-material/TaskOutlined';
-import BorderColorOutlinedIcon from '@mui/icons-material/BorderColorOutlined';
-import ElectricBoltIcon from '@mui/icons-material/ElectricBolt';
-import TrendingUpOutlinedIcon from '@mui/icons-material/TrendingUpOutlined';
-import FileDownloadOutlinedIcon from '@mui/icons-material/FileDownloadOutlined';
-import { useTranslation } from 'react-i18next';
-import QuestionAnswerOutlinedIcon from '@mui/icons-material/QuestionAnswerOutlined';
-import ChatBubbleOutlineIcon from '@mui/icons-material/ChatBubbleOutline';
+import { Box, Typography, Chip } from "@mui/material";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
+import { CV_TOOLS } from "../../constants/homeData";
 
 function FeaturesSection() {
   const { t } = useTranslation();
+  const navigate = useNavigate();
 
-  const CVTools = [
-    {
-      title: t("CV Analysis"),
-      description: t("cv_analysis.subtitle"),
-      icon: <PlagiarismIcon sx={{ fontSize: "50px", marginTop: "20px", color: "primary.main" }} />,
-    },
-    {
-      title: t("Smart Feedback"),
-      description: t("cv_feedback.subtitle"),
-      icon: <TaskIcon sx={{ fontSize: "50px", marginTop: "20px", color: "primary.main" }} />,
-    },
-    {
-      title: t("CV Builder"),
-      description: t("cv_builder.subtitle"),
-      icon: <BorderColorOutlinedIcon sx={{ fontSize: "50px", marginTop: "20px", color: "primary.main" }} />,
-    },
-    
-    {
-      title: t("Performance Tracking"),
-      description: t("performance_tracking.subtitle"),
-      icon: <TrendingUpOutlinedIcon sx={{ fontSize: "50px", marginTop: "20px", color: "primary.main" }} />,
-    },
-   
-    {
-      title: t("Interview Questions"),
-      description: t("interview_questions.subtitle"), // Add this key to your translation files
-      icon: <QuestionAnswerOutlinedIcon sx={{ fontSize: "50px", marginTop: "20px", color: "primary.main" }} />,
-    },
-    {
-      title: t("Chat Assistant"),
-      description: t("chat_assistant.subtitle"), // Add this key to your translation files
-      icon: <ChatBubbleOutlineIcon sx={{ fontSize: "50px", marginTop: "20px", color: "primary.main" }} />,
-    }
-  ];
-  
-    return (
-<Box>
-    <Box className="header" sx={{display: "flex",
-        flexDirection: "column", alignItems: "center",justifyContent:"center" , py:6,px:1}}>
-        <Typography variant='h4'
-        sx={{ background:
-            "linear-gradient(to right, rgb(107, 36, 155), rgb(233, 155, 38), rgb(241, 123, 212))",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            my:2,
-        }}>
-        {t('Powerful CV Tools')}
-        </Typography>
-        <Typography variant='body2' 
-        sx={{color: "text.secondary", fontSize: "16px",my:1,
-    
-        }}>
-        {t('home2.subtitle')}
-</Typography>
-    </Box>
-
-<Grid container spacing={2} sx={{display: "flex", justifyContent: "center", alignItems: "center", px: 2}}>  
-{CVTools.map((tool,index)=>{
   return (
-    
-    <Grid  key={index}>
-    <Card sx={{ maxWidth: 345,textAlign:"center" }} key={index} className="card">
-    <CardActionArea sx={{p:1}}>
-   
-  { tool.icon}
-      <CardContent sx={{ height:"100px",width:"300px" }}>
-        <Typography gutterBottom variant="h6" component="div">
-          {tool.title}
+    <Box
+      sx={{
+        py: { xs: 10, md: 14 },
+        backgroundColor: "#f5f4ef",
+        position: "relative",
+        overflow: "hidden",
+      }}
+    >
+      {/* Decorative blob */}
+      <Box
+        sx={{
+          position: "absolute",
+          top: -80,
+          left: -80,
+          width: 320,
+          height: 320,
+          borderRadius: "50%",
+          background:
+            "radial-gradient(circle, rgba(42,92,69,0.07) 0%, transparent 70%)",
+          pointerEvents: "none",
+        }}
+      />
+
+      {/* Section header */}
+      <Box
+        sx={{
+          textAlign: "center",
+          mb: { xs: 7, md: 9 },
+          px: 2,
+        }}
+      >
+        <Chip
+          label={t("Everything you need")}
+          size="small"
+          sx={{
+            mb: 2,
+            backgroundColor: "#e8f2ec",
+            color: "#2a5c45",
+            fontWeight: 600,
+            letterSpacing: "0.5px",
+            fontSize: "0.75rem",
+          }}
+        />
+        <Typography
+          variant="h2"
+          sx={{
+            fontFamily: '"DM Serif Display", serif',
+            color: "#1a1a18",
+            fontSize: { xs: "2rem", md: "2.8rem" },
+            lineHeight: 1.15,
+            mb: 2,
+          }}
+        >
+          {t("Powerful CV Tools")}
         </Typography>
-        <Typography variant="body1" sx={{ color: 'text.secondary', fontSize: "15px" }}>
-          {tool.description}
+        <Typography
+          sx={{
+            color: "#6b6b66",
+            fontSize: "1.05rem",
+            maxWidth: "560px",
+            mx: "auto",
+            lineHeight: 1.75,
+          }}
+        >
+          {t("home2.subtitle")}
         </Typography>
-      </CardContent>
-    </CardActionArea>
-  </Card>
-  </Grid>
-  )
-})}
-    
-    </Grid>
-</Box>
-    )
+      </Box>
+
+      {/* Feature cards grid */}
+      <Box
+        sx={{
+          px: { xs: 2, sm: 4, md: 8 },
+          maxWidth: "1200px",
+          mx: "auto",
+          display: "grid",
+          gridTemplateColumns: {
+            xs: "1fr",
+            sm: "repeat(2, 1fr)",
+            md: "repeat(3, 1fr)",
+          },
+          gap: 3,
+        }}
+      >
+        {CV_TOOLS.map((tool, index) => (
+          <Box key={index}>
+            <Box
+              onClick={() => navigate(tool.to)}
+              sx={{
+                height: "100%",
+                p: 3.5,
+                borderRadius: "14px",
+                backgroundColor: "#ffffff",
+                border: "1px solid rgba(26,26,24,0.07)",
+                cursor: "pointer",
+                display: "flex",
+                flexDirection: "column",
+                gap: 2,
+                transition: "all 0.25s ease",
+                "&:hover": {
+                  transform: "translateY(-5px)",
+                  boxShadow: "0 20px 40px -12px rgba(42,92,69,0.15)",
+                  borderColor: "rgba(42,92,69,0.25)",
+                  "& .arrow-icon": { opacity: 1, transform: "translateX(4px)" },
+                },
+              }}
+            >
+              {/* Icon + badge row */}
+              <Box
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Box
+                  sx={{
+                    p: 1.5,
+                    backgroundColor: "#e8f2ec",
+                    borderRadius: "10px",
+                    display: "inline-flex",
+                  }}
+                >
+                  {tool.icon}
+                </Box>
+                <Chip
+                  label={tool.badge}
+                  size="small"
+                  sx={{
+                    backgroundColor: "#f5f4ef",
+                    color: "#6b6b66",
+                    fontSize: "0.7rem",
+                    fontWeight: 600,
+                    height: 24,
+                  }}
+                />
+              </Box>
+
+              {/* Text */}
+              <Box sx={{ flex: 1 }}>
+                <Typography
+                  variant="h6"
+                  sx={{
+                    fontWeight: 600,
+                    color: "#1a1a18",
+                    mb: 0.75,
+                    fontSize: "1rem",
+                  }}
+                >
+                  {t(tool.titleKey)}
+                </Typography>
+                <Typography
+                  variant="body2"
+                  sx={{ color: "#6b6b66", lineHeight: 1.7, fontSize: "0.9rem" }}
+                >
+                  {t(tool.descriptionKey)}
+                </Typography>
+              </Box>
+
+              {/* Arrow */}
+              <Box
+                className="arrow-icon"
+                sx={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 0.5,
+                  color: "#2a5c45",
+                  fontSize: "0.82rem",
+                  fontWeight: 600,
+                  opacity: 0,
+                  transition: "all 0.25s ease",
+                }}
+              >
+                <Typography
+                  sx={{
+                    fontSize: "0.82rem",
+                    fontWeight: 600,
+                    color: "#2a5c45",
+                  }}
+                >
+                  {t("Learn more")}
+                </Typography>
+                <ArrowForwardIcon sx={{ fontSize: "0.95rem" }} />
+              </Box>
+            </Box>
+          </Box>
+        ))}
+      </Box>
+    </Box>
+  );
 }
 
-export default FeaturesSection        
+export default FeaturesSection;

@@ -29,6 +29,9 @@ const PlanTab = () => {
 
   return (
     <Box>
+      <Typography sx={{ fontFamily: '"DM Serif Display", serif', fontSize: '22px', mb: 3 }}>
+        {t("Plan")}
+      </Typography>
       <Box
         sx={{
           bgcolor: "grey.50",

@@ -16,7 +16,7 @@ const ModernCV = ({
   return (
     <Box sx={{
       display: 'flex',
-      width: '900px',
+      width: '100%',
       backgroundColor: '#ffffff',
       boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
       borderRadius: '8px',

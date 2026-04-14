@@ -5,20 +5,20 @@ import AIWritingAssistDialog from "./component/AIWritingAssist";
 import ChooseTemplateDialog from "./component/chooseTemplate";
 import { Box, Button } from "@mui/material";
 import { useAuth } from "../../../hooks/useAuth";
-import ProWarning from "../../../components/ui/ProWarning";
+import { useNavigate } from "react-router-dom";
 
 function TemplatesSection() {
   const [open, setOpen] = useState(false);
   const [open2, setOpen2] = useState(false);
   const dialogKey = 0;
-  const [openPaymentDialog, setOpenPaymentDialog] = useState(false);
+  const navigate = useNavigate();
   const { user } = useAuth();
   const isPro = user.role === "pro user";
   const handleClickOpen = () => {
     if (isPro) {
       setOpen(true);
     } else {
-      setOpenPaymentDialog(true);
+      navigate("/pricing");
     }
   };
   const handleClose = () => {
@@ -37,18 +37,20 @@ function TemplatesSection() {
       <Box
         sx={{
           py: 2,
-          px: 2,
+          px: 3,
           bgcolor: "white",
-          borderRadius: 2,
-          border: "1px solid #ccc",
+          borderRadius: 4,
+          border: "1px solid rgba(26,26,24,0.1)",
+          display: "flex",
+          flexDirection: { xs: "column", sm: "row" },
+          gap: 2,
         }}
       >
         <Button
-          sx={{ my: 1 }}
           onClick={handleClickOpen2}
           variant="outlined"
           startIcon={<ViewModuleIcon />}
-          fullWidth
+          sx={{ flex: 1, borderRadius: 2, py: 1.5, borderColor: '#dcdcdc', color: '#1a1a18' }}
         >
           Choose Template
         </Button>
@@ -60,11 +62,10 @@ function TemplatesSection() {
         />
 
         <Button
-          sx={{ my: 1 }}
           onClick={handleClickOpen}
-          variant="outlined"
+          variant="contained"
           startIcon={<AutoFixHighIcon />}
-          fullWidth
+          sx={{ flex: 1, borderRadius: 2, py: 1.5, bgcolor: '#2a5c45', boxShadow: 'none', '&:hover': { bgcolor: '#1a3c2d', boxShadow: 'none' } }}
         >
           AI Writing Assistant
         </Button>
@@ -75,10 +76,6 @@ function TemplatesSection() {
           selectedValue={""}
         />
 
-        <ProWarning
-          openPaymentDialog={openPaymentDialog}
-          setOpenPaymentDialog={setOpenPaymentDialog}
-        ></ProWarning>
       </Box>
     </>
   );

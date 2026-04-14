@@ -8,14 +8,14 @@ const Error = () => {
           width: 100,
           height: 100,
           bgcolor: 'white',
-          boxShadow: '0 0 20px #7d25d2'}}
+          boxShadow: '0 0 20px rgba(42,92,69,0.3)'}}
       >
-        <DescriptionIcon sx={{ color: '#7d25d2', fontSize: 60 }} />
+        <DescriptionIcon sx={{ color: '#2a5c45', fontSize: 60 }} />
       </Avatar>
         <Typography align="center" variant="h3" color="warning" sx={{fontWeight:"bold"}}><Box component="i" className="bi bi-exclamation-diamond"></Box>404</Typography>
         <Typography color="black" align="center" width="50%">Oops! The page you're looking for doesn't exist.</Typography>
         <Link underline="none" color="black" href="/">
-        <Button fullWidth sx={{ mt: 1, background: 'linear-gradient(135deg, #5a0db5 0%, #7d25d2 100%)', color: 'white' }}>
+        <Button fullWidth sx={{ mt: 1, background: '#2a5c45', color: 'white', '&:hover': { background: '#1e4332' } }}>
             Return to home
             </Button>
         </Link>

@@ -24,7 +24,6 @@ interface MobileMenuProps {
   isAuthenticated: boolean;
   user: any;
   onLogout: () => void;
-  onOpenPayment: () => void;
 }
 
 const MobileMenu = ({
@@ -34,7 +33,6 @@ const MobileMenu = ({
   isAuthenticated,
   user,
   onLogout,
-  onOpenPayment,
 }: MobileMenuProps) => {
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -102,9 +100,8 @@ const MobileMenu = ({
         >
           <Button
             fullWidth
+            variant="contained"
             sx={{
-              background:
-                "linear-gradient(135deg, #5a0db5 0%, #7d25d2 100%)",
               color: "white",
             }}
           >
@@ -112,25 +109,7 @@ const MobileMenu = ({
           </Button>
         </MenuItem>
       )}
-      {user?.role === "normal user" && (
-        <MenuItem
-          onClick={() => {
-            onClose();
-            onOpenPayment();
-          }}
-        >
-          <Button
-            fullWidth
-            sx={{
-              background:
-                "linear-gradient(135deg, #5a0db5 0%, #7d25d2 100%)",
-              color: "white",
-            }}
-          >
-            {t("Go Pro")}
-          </Button>
-        </MenuItem>
-      )}
+
       {user?.role === "pro user" && (
         <MenuItem
           onClick={() => {
@@ -140,9 +119,8 @@ const MobileMenu = ({
         >
           <Button
             fullWidth
+            variant="contained"
             sx={{
-              background:
-                "linear-gradient(135deg, #5a0db5 0%, #7d25d2 100%)",
               color: "white",
             }}
           >

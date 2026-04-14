@@ -19,7 +19,6 @@ interface DesktopNavProps {
   pages: Page[];
   isAuthenticated: boolean;
   user: any;
-  onOpenPayment: () => void;
   onLogout: () => void;
 }
 
@@ -27,7 +26,6 @@ const DesktopNav = ({
   pages,
   isAuthenticated,
   user,
-  onOpenPayment,
   onLogout,
 }: DesktopNavProps) => {
   const { t } = useTranslation();
@@ -54,10 +52,15 @@ const DesktopNav = ({
           key={page.label}
           onClick={() => navigate(page.href)}
           sx={{
-            color: "black",
+            color: "#6b6b66",
+            fontSize: "14px",
             textDecoration: "none",
             cursor: "pointer",
             fontWeight: 500,
+            transition: "color 0.2s",
+            "&:hover": {
+              color: "#1a1a18",
+            },
           }}
         >
           {page.label}
@@ -66,29 +69,13 @@ const DesktopNav = ({
 
       {!isAuthenticated && (
         <Button
+          variant="contained"
           onClick={() => navigate("/login")}
           sx={{
-            background:
-              "linear-gradient(135deg, #6a11cb 0%, #8e2de2 100%)",
-            color: "white",
             fontSize: "12px",
           }}
         >
           {t("LogIn")}
-        </Button>
-      )}
-
-      {user?.role === "normal user" && (
-        <Button
-          onClick={onOpenPayment}
-          sx={{
-            background:
-              "linear-gradient(135deg, #6a11cb 0%, #8e2de2 100%)",
-            color: "white",
-            fontSize: "12px",
-          }}
-        >
-          {t("Go Pro")}
         </Button>
       )}
 
@@ -111,11 +98,9 @@ const DesktopNav = ({
 
       {user?.role === "pro user" && (
         <Button
+          variant="contained"
           onClick={() => navigate("/settings?tab=plan")}
           sx={{
-            background:
-              "linear-gradient(135deg, #6a11cb 0%, #8e2de2 100%)",
-            color: "white",
             fontSize: "12px",
           }}
         >

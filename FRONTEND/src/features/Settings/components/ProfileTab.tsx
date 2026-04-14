@@ -139,6 +139,11 @@ const ProfileTab = () => {
         </Alert>
       )}
 
+      {/* Section Header */}
+      <Typography sx={{ fontFamily: '"DM Serif Display", serif', fontSize: '22px', mb: 3 }}>
+        {t("Profile")}
+      </Typography>
+
       {/* User Details */}
       <Box sx={{ display: "flex", alignItems: "center", gap: 1.5, mb: 3 }}>
         <Box sx={{ position: "relative" }}>
@@ -180,10 +185,17 @@ const ProfileTab = () => {
           {user?.photo && (
             <Button
               size="small"
-              color="error"
               startIcon={<DeleteOutlineIcon sx={{ fontSize: 14 }} />}
               onClick={handleDeletePhoto}
-              sx={{ textTransform: "none", fontSize: 11, p: 0, mt: 0.5, minWidth: 0 }}
+              sx={{ 
+                textTransform: "none", 
+                fontSize: 11, 
+                p: 0, 
+                mt: 0.5, 
+                minWidth: 0,
+                color: "#c25b1a",
+                "&:hover": { bgcolor: "transparent", textDecoration: "underline" }
+              }}
             >
               {t("Remove photo")}
             </Button>
@@ -201,6 +213,11 @@ const ProfileTab = () => {
             onChange={(e) => setFirstName(e.target.value)}
             placeholder={user?.firstName}
             slotProps={{ inputLabel: { shrink: true } }}
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                borderRadius: "8px",
+              },
+            }}
           />
         </Grid>
         <Grid size={{ xs: 12, sm: 6 }}>
@@ -212,11 +229,20 @@ const ProfileTab = () => {
             onChange={(e) => setLastName(e.target.value)}
             placeholder={user?.lastName}
             slotProps={{ inputLabel: { shrink: true } }}
+            sx={{
+              "& .MuiOutlinedInput-root": {
+                borderRadius: "8px",
+              },
+            }}
           />
         </Grid>
       </Grid>
       <Box sx={{ mb: 4 }}>
-        <Button variant="contained" onClick={handleProfileSave}>
+        <Button 
+          variant="contained" 
+          onClick={handleProfileSave}
+          sx={{ borderRadius: "8px" }}
+        >
           {t("Save changes")}
         </Button>
       </Box>
@@ -227,9 +253,15 @@ const ProfileTab = () => {
         </Typography>
         <Button
           variant="text"
-          color="error"
           onClick={() => setDeleteDialogOpen(true)}
-          sx={{ textTransform: "none", p: 0, fontWeight: 500, minWidth: 0 }}
+          sx={{ 
+            textTransform: "none", 
+            p: 0, 
+            fontWeight: 500, 
+            minWidth: 0,
+            color: "#c25b1a",
+            "&:hover": { bgcolor: "transparent", textDecoration: "underline" }
+          }}
         >
           {t("Delete account")}
         </Button>
@@ -247,7 +279,16 @@ const ProfileTab = () => {
           <Button onClick={() => setDeleteDialogOpen(false)} color="inherit">
             {t("Cancel")}
           </Button>
-          <Button onClick={handleDeleteAccount} color="error" variant="contained">
+          <Button 
+            onClick={handleDeleteAccount} 
+            variant="contained"
+            sx={{ 
+              bgcolor: "#c25b1a", 
+              color: "white",
+              "&:hover": { bgcolor: "#a84a12" },
+              borderRadius: "8px"
+            }}
+          >
             {t("Delete")}
           </Button>
         </DialogActions>

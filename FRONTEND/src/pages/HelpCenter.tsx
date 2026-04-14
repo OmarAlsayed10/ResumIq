@@ -91,16 +91,17 @@ const HelpCenter = () => {
           variant="h4"
           fontWeight={700}
           sx={{
-            background: "linear-gradient(135deg, #6a11cb 0%, #8e2de2 100%)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
+            color: "#1a1a18",
             mb: 1,
+            fontFamily: '"DM Serif Display", serif',
           }}
         >
           {t("Help Center")}
         </Typography>
         <Typography color="text.secondary" fontSize={15}>
-          {t("Find answers to common questions and learn how to get the most out of Smart-CV")}
+          {t(
+            "Find answers to common questions and learn how to get the most out of Resume-IQ",
+          )}
         </Typography>
       </Box>
 
@@ -117,7 +118,9 @@ const HelpCenter = () => {
                 "&:hover": { borderColor: "primary.main", boxShadow: 1 },
               }}
             >
-              <CardContent sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+              <CardContent
+                sx={{ display: "flex", alignItems: "center", gap: 2 }}
+              >
                 {cat.icon}
                 <Box>
                   <Typography fontWeight={600} fontSize={14}>
@@ -171,26 +174,32 @@ const HelpCenter = () => {
           p: 4,
           textAlign: "center",
           borderRadius: 3,
-          background: "linear-gradient(135deg, rgba(106,17,203,0.05), rgba(142,45,226,0.08))",
-          border: "1px solid",
-          borderColor: "divider",
+          bgcolor: "#e8f2ec",
+          border: "1px solid rgba(26,26,24,0.1)",
         }}
       >
         <Typography fontWeight={600} sx={{ mb: 1 }}>
           {t("Still need help?")}
         </Typography>
         <Typography fontSize={13} color="text.secondary" sx={{ mb: 2 }}>
-          {t("Contact our support team and we'll get back to you as soon as possible.")}
+          {t(
+            "Contact our support team and we'll get back to you as soon as possible.",
+          )}
         </Typography>
         <Button
           variant="contained"
           startIcon={<EmailIcon />}
-          href="mailto:support@smart-cv.com"
+          href="mailto:support@Resume-IQ.com"
           sx={{
-            background: "linear-gradient(135deg, #6a11cb 0%, #8e2de2 100%)",
+            backgroundColor: "#2a5c45",
             borderRadius: 2,
             textTransform: "none",
             fontWeight: 600,
+            boxShadow: "none",
+            "&:hover": {
+              backgroundColor: "#1e4332",
+              boxShadow: "none",
+            },
           }}
         >
           {t("Contact Support")}

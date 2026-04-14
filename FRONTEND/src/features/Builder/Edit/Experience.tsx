@@ -43,7 +43,7 @@ const Experience = () => {
 
   const { control, watch } = useForm({
     resolver: zodResolver(experienceSchema),
-    defaultValues: { experience: experiences },
+    defaultValues: { experience: JSON.parse(JSON.stringify(experiences)) },
     mode: "onChange",
   });
 
@@ -54,9 +54,8 @@ const Experience = () => {
 
   useEffect(() => {
     const subscription = watch((value) => {
-      dispatch(
-        updateSection({ section: "experience", data: value.experience || [] }),
-      );
+      const clonedData = value.experience ? JSON.parse(JSON.stringify(value.experience)) : [];
+      dispatch(updateSection({ section: "experience", data: clonedData }));
     });
     return () => subscription.unsubscribe();
   }, [watch, dispatch]);
@@ -101,17 +100,21 @@ const Experience = () => {
         </Typography>
 
         <Button
-          variant="contained"
+          variant="outlined"
           startIcon={<AddIcon />}
           onClick={addExperience}
           sx={{
-            bgcolor: "#4e54c8",
-            color: "white",
+            border: "1px dashed rgba(26,26,24,0.3)",
+            borderColor: "rgba(26,26,24,0.3)",
+            color: "#1a1a18",
             "&:hover": {
-              bgcolor: "#3f46a5",
+              borderColor: "#2a5c45",
+              color: "#2a5c45",
+              backgroundColor: "rgba(42,92,69,0.05)",
             },
             fontSize: "0.85rem",
             padding: "6px 12px",
+            boxShadow: "none"
           }}
         >
           {t("Add Experience")}

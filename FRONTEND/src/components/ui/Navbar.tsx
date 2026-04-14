@@ -13,7 +13,7 @@ import axios from "axios";
 import i18n from "../../i18n";
 import { useTranslation } from "react-i18next";
 import { useAuth } from "../../hooks/useAuth";
-import ProWarning from "./ProWarning";
+
 import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import Cookies from "js-cookie";
@@ -26,7 +26,6 @@ function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null,
   );
-  const [openPaymentDialog, setOpenPaymentDialog] = React.useState(false);
 
   const { t } = useTranslation();
   const navigate = useNavigate();
@@ -60,16 +59,19 @@ function Navbar() {
   const pages = [
     { label: t("Home"), href: "/" },
     { label: t("Blogs"), href: "/Blogs" },
-    { label: t("Tips"), href: "/tips" },
+    { label: t("Pricing"), href: "/pricing" },
   ];
 
   return (
     <AppBar
-      position="static"
+      position="sticky"
+      elevation={0}
       sx={{
-        backgroundColor: "#f5f5f5",
-        borderBottom: "1px solid #ddd",
+        backgroundColor: "#ffffff",
+        borderBottom: "1px solid rgba(26, 26, 24, 0.1)",
         direction: isRTL ? "rtl" : "ltr",
+        height: "56px",
+        justifyContent: "center",
       }}
     >
       <Container maxWidth="xl" disableGutters>
@@ -86,12 +88,13 @@ function Navbar() {
               fontWeight: "bold",
               fontSize: "20px",
               cursor: "pointer",
+              fontFamily: '"DM Serif Display", serif',
             }}
           >
             <DescriptionIcon
-              sx={{ color: "#7d25d2", mr: 1, fontSize: "30px" }}
+              sx={{ color: "#2a5c45", mr: 1, fontSize: "30px" }}
             />
-            Smart-CV
+            Resume-IQ
           </Typography>
 
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -114,10 +117,11 @@ function Navbar() {
                 textDecoration: "none",
                 cursor: "pointer",
                 alignItems: "center",
+                fontFamily: '"DM Serif Display", serif',
               }}
             >
-              <DescriptionIcon sx={{ color: "#7d25d2", mr: 1 }} />
-              Smart-CV
+              <DescriptionIcon sx={{ color: "#2a5c45", mr: 1 }} />
+              Resume-IQ
             </Typography>
           </Box>
 
@@ -128,22 +132,16 @@ function Navbar() {
             isAuthenticated={isAuthenticated}
             user={user}
             onLogout={handleLogout}
-            onOpenPayment={() => setOpenPaymentDialog(true)}
           />
 
           <DesktopNav
             pages={pages}
             isAuthenticated={isAuthenticated}
             user={user}
-            onOpenPayment={() => setOpenPaymentDialog(true)}
             onLogout={handleLogout}
           />
         </Toolbar>
       </Container>
-      <ProWarning
-        openPaymentDialog={openPaymentDialog}
-        setOpenPaymentDialog={setOpenPaymentDialog}
-      />
     </AppBar>
   );
 }

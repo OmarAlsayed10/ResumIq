@@ -43,13 +43,14 @@ const Skills = () => {
 
   const { control, watch, setValue, getValues } = useForm({
     resolver: zodResolver(skillsSchema),
-    defaultValues: formDataSkills,
+    defaultValues: JSON.parse(JSON.stringify(formDataSkills)),
     mode: "onChange",
   });
 
   useEffect(() => {
     const subscription = watch((value) => {
-      dispatch(updateSection({ section: "skills", data: value }));
+      const clonedData = value ? JSON.parse(JSON.stringify(value)) : {};
+      dispatch(updateSection({ section: "skills", data: clonedData }));
     });
     return () => subscription.unsubscribe();
   }, [watch, dispatch]);
@@ -110,17 +111,23 @@ const Skills = () => {
           }}
         />
         <Button
-          variant="contained"
+          variant="outlined"
           startIcon={<AddIcon />}
           onClick={addSkill}
           sx={{
-            bgcolor: "#4e54c8",
-            color: "white",
-            "&:hover": { bgcolor: "#3f46a5" },
+            border: "1px dashed rgba(26,26,24,0.3)",
+            borderColor: "rgba(26,26,24,0.3)",
+            color: "#1a1a18",
+            "&:hover": {
+              borderColor: "#2a5c45",
+              color: "#2a5c45",
+              backgroundColor: "rgba(42,92,69,0.05)",
+            },
             fontSize: "0.8rem",
             padding: "4px 12px",
-            width: "80px",
+            boxShadow: "none",
             mt: -1,
+            height: "fit-content"
           }}
         >
           {t("add")}

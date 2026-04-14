@@ -1,7 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import axios from 'axios';
 import { useAuth } from "../../../hooks/useAuth";
-
+import { useNavigate } from "react-router-dom";
 export const useChatBot = () => {
     const [messages, setMessages] = useState<any[]>([]);
     const [input, setInput] = useState('');
@@ -12,7 +12,7 @@ export const useChatBot = () => {
     
     const { user } = useAuth();
     const isPro = user?.role === 'pro user';
-    const [openPaymentDialog, setOpenPaymentDialog] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const createChat = async () => {
@@ -43,7 +43,7 @@ export const useChatBot = () => {
         if (isPro) {
             setOpen(true);
         } else {
-            setOpenPaymentDialog(true);
+            navigate("/pricing");
         }
     };
 
@@ -89,7 +89,5 @@ export const useChatBot = () => {
         messagesEndRef,
         handleChatButtonClick,
         handleSend,
-        openPaymentDialog,
-        setOpenPaymentDialog
     };
 };

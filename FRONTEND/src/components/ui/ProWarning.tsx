@@ -118,19 +118,20 @@ function ProWarning({ openPaymentDialog, setOpenPaymentDialog }) {
           onClick={handleNavigateToPayment}
           variant="contained"
           sx={{
-            background: "linear-gradient(to right, #FFD700, #FFA000)",
-            color: "#000",
+            backgroundColor: "#2a5c45",
+            color: "#ffffff",
             fontWeight: "bold",
             borderRadius: 3,
             textTransform: "none",
             px: 4,
             py: 1.25,
             ml: 2,
-            boxShadow: "0 6px 15px rgba(0,0,0,0.2)",
+            boxShadow: "none",
             transition: "all 0.3s ease",
             "&:hover": {
-              transform: "translateY(-2px) scale(1.03)",
-              background: "linear-gradient(to right, #FFC107, #FF8F00)",
+              transform: "translateY(-2px)",
+              backgroundColor: "#1e4332",
+              boxShadow: "none",
             },
           }}
         >

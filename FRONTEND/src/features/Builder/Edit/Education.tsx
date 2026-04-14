@@ -49,7 +49,7 @@ const Education = () => {
 
   const { control, watch } = useForm({
     resolver: zodResolver(educationSchema),
-    defaultValues: { education: educations },
+    defaultValues: { education: JSON.parse(JSON.stringify(educations)) },
     mode: "onChange",
   });
 
@@ -60,9 +60,8 @@ const Education = () => {
 
   useEffect(() => {
     const subscription = watch((value) => {
-      dispatch(
-        updateSection({ section: "education", data: value.education || [] }),
-      );
+      const clonedData = value.education ? JSON.parse(JSON.stringify(value.education)) : [];
+      dispatch(updateSection({ section: "education", data: clonedData }));
     });
     return () => subscription.unsubscribe();
   }, [watch, dispatch]);
@@ -102,17 +101,21 @@ const Education = () => {
         </Typography>
 
         <Button
-          variant="contained"
+          variant="outlined"
           startIcon={<AddIcon />}
           onClick={addEducation}
           sx={{
-            bgcolor: "#4e54c8",
-            color: "white",
+            border: "1px dashed rgba(26,26,24,0.3)",
+            borderColor: "rgba(26,26,24,0.3)",
+            color: "#1a1a18",
             "&:hover": {
-              bgcolor: "#3f46a5",
+              borderColor: "#2a5c45",
+              color: "#2a5c45",
+              backgroundColor: "rgba(42,92,69,0.05)",
             },
             fontSize: "0.85rem",
             padding: "6px 12px",
+            boxShadow: "none"
           }}
         >
           {t("Add Education")}

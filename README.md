@@ -1,1 +1,1 @@
-# SmartCV
+# Resume-IQ

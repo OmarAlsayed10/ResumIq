@@ -168,10 +168,8 @@ const Header = () => {
             component="div"
             sx={{
               fontWeight: "bold",
-              background:
-                "linear-gradient(to right, rgba(107, 36, 155, 0.84), rgba(247, 61, 201, 0.79), rgba(233, 155, 38, 0.77))",
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
+              color: "#1a1a18",
+              fontFamily: '"DM Serif Display", serif',
               cursor: "pointer",
               textAlign: isMobile ? "center" : "start",
             }}
@@ -225,6 +223,7 @@ const Header = () => {
               startIcon={<UpdateIcon sx={{ marginInlineEnd: 1 }} />}
               fullWidth={isMobile}
               variant="outlined"
+              sx={{ borderColor: "rgba(26,26,24,0.18)", color: "#1a1a18", borderRadius: "6px", "&:hover": { borderColor: "#2a5c45" } }}
             >
               {t("Update")}
             </Button>
@@ -235,6 +234,7 @@ const Header = () => {
             startIcon={<SaveIcon sx={{ marginInlineEnd: 1 }} />}
             fullWidth={isMobile}
             variant="outlined"
+            sx={{ borderColor: "rgba(26,26,24,0.18)", color: "#1a1a18", borderRadius: "6px", "&:hover": { borderColor: "#2a5c45" } }}
           >
             {t("Save")}
           </Button>
@@ -250,6 +250,13 @@ const Header = () => {
                 fullWidth={isMobile}
                 variant="contained"
                 disabled={loading}
+                sx={{
+                  backgroundColor: "#2a5c45",
+                  color: "white",
+                  boxShadow: "none",
+                  borderRadius: "6px",
+                  "&:hover": { backgroundColor: "#1e4332", boxShadow: "none" }
+                }}
               >
                 {loading ? t("Generating...") : t("Download")}
               </Button>

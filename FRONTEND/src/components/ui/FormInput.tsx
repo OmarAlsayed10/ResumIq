@@ -51,29 +51,34 @@ const FormInput = (props: any) => {
             !multiline
               ? {
                   "& .MuiInput-input": {
-                    border: "1px solid #ddd",
+                    border: "1px solid rgba(26,26,24,0.18)",
                     height: "26px",
                     padding: "4px 8px",
-                    borderRadius: "8px",
+                    borderRadius: "6px",
                     fontSize: "0.85rem",
-                    transition: "border-color 0.2s",
+                    transition: "border-color 0.2s, box-shadow 0.2s",
                     "&:focus": {
-                      borderColor: "primary.main",
+                      borderColor: "#2a5c45",
+                      boxShadow: "0 0 0 3px rgba(42,92,69,0.12)",
                     }
                   },
                 }
               : {
                   "& .MuiOutlinedInput-root": {
                     padding: "6px",
-                    borderRadius: "8px",
+                    borderRadius: "6px",
                     "& fieldset": {
-                      borderColor: "#ddd",
+                      borderColor: "rgba(26,26,24,0.18)",
                     },
                     "&:hover fieldset": {
-                      borderColor: "#bbb",
+                      borderColor: "rgba(26,26,24,0.3)",
                     },
                     "&.Mui-focused fieldset": {
-                      borderColor: "primary.main",
+                      borderColor: "#2a5c45",
+                      borderWidth: "1px",
+                    },
+                    "&.Mui-focused": {
+                      boxShadow: "0 0 0 3px rgba(42,92,69,0.12)",
                     },
                     "& textarea": {
                       padding: "4px",

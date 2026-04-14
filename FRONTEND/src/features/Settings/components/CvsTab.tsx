@@ -37,7 +37,7 @@ const CvsTab = () => {
 
   return (
     <Box>
-      <Typography variant="h6" sx={{ mb: 3, fontSize: "1.1rem", fontWeight: 600 }}>
+      <Typography sx={{ fontFamily: '"DM Serif Display", serif', fontSize: '22px', mb: 3 }}>
         {t("My CVs")}
       </Typography>
       <Grid container spacing={2}>

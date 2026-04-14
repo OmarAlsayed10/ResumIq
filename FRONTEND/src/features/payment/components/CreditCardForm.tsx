@@ -89,16 +89,19 @@ export const CreditCardForm = ({ form, errors, handleChange, loading }: CreditCa
           type="submit"
           fullWidth
           variant="contained"
-          color="secondary"
           size="large"
           disabled={loading}
           sx={{
             py: 1.5,
             fontWeight: 'bold',
             borderRadius: 2,
+            bgcolor: "#2a5c45",
+            color: "white",
             transition: '0.3s',
+            boxShadow: 'none',
             ':hover': {
-              backgroundColor: 'secondary.dark',
+              bgcolor: "#1e4332",
+              boxShadow: 'none',
             },
           }}
         >
